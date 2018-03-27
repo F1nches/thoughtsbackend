@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var ThoughtSchema = mongoose.Schema({
   author: String,
   content: String,
+  tags: Array,
   rep: Number,
   createdAt: Date
 });

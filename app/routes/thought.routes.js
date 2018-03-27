@@ -15,4 +15,5 @@ module.exports = function(app) {
 
   // Delete a single thought by thoughtId
   app.delete('/api/thoughts/:thoughtId', thoughts.delete);
+
 }

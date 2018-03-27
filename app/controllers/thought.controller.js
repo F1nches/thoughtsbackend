@@ -6,7 +6,7 @@ exports.create = function(req, res) {
     return res.status(400).send({message: "Empty thoughts are for empty minds."});
   }
 
-  var thought = new Thought({ author: req.body.author || "No name", content: req.body.content, rep: 0, createdAt: new Date() });
+  var thought = new Thought({ author: req.body.author || "No name", content: req.body.content, tags: req.body.tags, rep: 0, createdAt: new Date() });
 
   thought.save(function(err, data) {
     if (err) {

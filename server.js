@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-
+var cors = require('cors');
 // Create express app
 var app = express();
 
@@ -9,6 +9,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Parse requests of content-type - application/json
 app.use(bodyParser.json());
+
+// cors
+app.use(cors());
 
 var dbConfig = require('./config/db.config.js');
 var mongoose = require('mongoose');
@@ -33,6 +36,9 @@ app.get('/', function(req, res) {
 
 // Require thought routes
 require('./app/routes/thought.routes.js')(app);
+
+// Require user routes
+require('./app/routes/user.routes.js')(app);
 
 // Listen for requests
 app.listen(3000, function() {
