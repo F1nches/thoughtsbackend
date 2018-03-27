@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 // cors
 app.use(cors());
 
-var dbConfig = require('./config/db.config.js');
+var dbConfig = require('./app/config/db.config.js');
 var mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -27,7 +27,10 @@ mongoose.connection.on('error', function() {
 
 mongoose.connection.once('open', function() {
   console.log("Hey we are successfully connected to the thought database.");
-})
+});
+
+// Configuring passport
+
 
 // Define a simple route
 app.get('/', function(req, res) {
@@ -41,6 +44,6 @@ require('./app/routes/thought.routes.js')(app);
 require('./app/routes/user.routes.js')(app);
 
 // Listen for requests
-app.listen(3000, function() {
+app.listen(dbConfig.port, function() {
   console.log("Server is listening on port 3000");
 });

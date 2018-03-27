@@ -1,61 +1,41 @@
 var User = require('../models/user.model.js');
+var passport = require('passport');
+var mongoose = require('mongoose');
 
-exports.create = function(req, res) {
-  // Create and save a new user
-  if (!req.body.username || !req.body.password || !req.body.email) {
-    return res.status(400).send({message: "Empty field somewhere."});
-  }
+var userController = {};
 
-  var user = new User({ username: req.body.username, password: req.body.password, email: req.body.email, rep: 0, createdAt: new Date() });
-
-  user.save(function(err, data) {
-    if (err) {
-      console.log(err);
-      res.status(500).send({message: "Error when saving new user."});
-    } else {
-      res.send(data);
-    }
-  });
-
-};
-
-// exports.findOne = function(req, res) {
-//   // Retrieve and return one user with the specified id
-//   User.findById(req.params.userId, function(err, user) {
-//     if (err) {
-//       console.log(err);
-//       if(err.kind === 'ObjectId') {
-//         return res.status(404).send({message: "User with this id (" + req.params.userId + ") not found."});
-//       }
-//       return res.status(500).send({message: "Error retrieving user with id " + req.params.userId});
-//     }
-//
-//     if (!user) {
-//       return res.status(404).send({message: "User not found with id " + req.params.userId});
-//     }
-//
-//     res.send(user);
-//
-//   });
-//
+// Restict access to root page
+// userController.home = function(req, res) {
+//   res.render('index', { user: req.user });
 // };
 
-exports.delete = function(req, res) {
-  // Delete a user with the specified id
-  User.findByIdAndRemove(req.params.userId, function(err, user) {
-    if (err) {
-      console.log(err);
-      if (err.kind === 'ObjectId') {
-        return res.status(404).send({message: "User not found with id " + req.params.userId});
-      }
-      return res.status(500).send({message: "Could not delete user with id " + req.params.userId});
-    }
+// Go to registration page
+// userController.register = function(req, res) {
+//   res.render('register');
+// };
 
-    if (!user) {
-      return res.status(404).send({message: "User not found with id " + req.params.userId});
-    }
+//Post registration
+// userController.doRegister = function(req, res) {
+//   User.register(new User({ username : req.body.username, name: req.body.name }), req.body.password, function(err, user) {
+//     if (err) {
+//       console.log(err);
+//     }
+//
+//     passport.authenticate('local')(req, res, function () {
+//       console.log('success');
+//     });
+//   });
+// };
+//
+//
+// userController.doLogin = function(req, res) {
+//   passport.authenticate('local')(req, res, function() {
+//     console.log('login successful');
+//   });
+// };
 
-    res.send({message: "User successfully deleted."});
-  });
+// userController.logout = function(req, res) {
+//   req.logout();
+// };
 
-};
+module.exports = userController;
